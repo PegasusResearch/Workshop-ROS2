@@ -23,9 +23,14 @@ class DroneSimulationNode(Node):
             automatically_declare_parameters_from_overrides=True)
 
         # Get the mass, inertia and frequency from the configurations
-        mass = self.get_parameter('drone_simulation.mass').get_parameter_value().integer_value
+        mass = self.get_parameter('drone_simulation.mass').get_parameter_value().double_value
         Ixx = self.get_parameter('drone_simulation.Ixx').get_parameter_value().double_value
         frequency = self.get_parameter('drone_simulation.frequency').get_parameter_value().double_value
+
+        # Log the parameters
+        self.get_logger().info("Drone mass: {}".format(mass))
+        self.get_logger().info("Drone Ixx: {}".format(Ixx))
+        self.get_logger().info("Drone frequency: {}".format(frequency))
 
         # Create the object that actually simulates the dynamics of a drone
         self.simulator = DroneSimulator(mass, Ixx, 1.0/frequency)

@@ -1,0 +1,6 @@
+/**:
+  ros__parameters:
+    drone_simulation:
+      mass: 0.2
+      Ixx: 0.1
+      frequency: 30.0

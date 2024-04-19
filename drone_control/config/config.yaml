@@ -1,0 +1,6 @@
+/**:
+  ros__parameters:
+    drone_controller:
+      kp: [1.0]
+      kd: [1.0]
+      frequency: 30.0

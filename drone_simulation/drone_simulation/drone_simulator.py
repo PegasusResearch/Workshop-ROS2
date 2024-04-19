@@ -13,7 +13,7 @@ class DroneSimulator:
         self.Ixx = Ixx
         self.dt = dt
 
-        self.g = -9.81
+        self.g = 9.81
 
         # The initial state of the system
         self.x = 0.0
@@ -44,5 +44,10 @@ class DroneSimulator:
         self.x += self.x_dot * self.dt
         self.y += self.y_dot * self.dt
         self.theta += self.theta_dot * self.dt
+
+        # Make sure the drone does not go below the ground
+        if self.y < 0.0:
+            self.y = 0.0
+            self.y_dot = 0.0
 
         return self.x, self.y, self.theta
