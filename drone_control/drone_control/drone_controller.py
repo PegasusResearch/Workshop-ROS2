@@ -45,8 +45,8 @@ class Controller:
         T = self.mass * np.norm(u - self.g_force)
 
         # Compute the target angle
-        normalized_u = (u - self.g_force) * self.m / T
-        theta_target = np.arctan2(-normalized_u[1], normalized_u[0])
+        normalized_u = -(u - self.g_force) * self.m / T
+        theta_target = np.arctan2(normalized_u[1], normalized_u[0])
 
         # Compute the inner loop control for the angular velocity
         omega = -self.theta_kp * (theta_target - theta) - self.theta_kd * theta_dot
