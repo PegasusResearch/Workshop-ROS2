@@ -9,7 +9,7 @@ from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data, qos_profile_system_default
 
 # Import the ROS 2 message to publish the current state of the drone
-from geometry_msgs.msg import PoseStamped
+from nav_msgs.msg import Odometry
 
 # Import my custom message to receive the control to apply to the drone
 from drone_msgs.msg import Control
@@ -43,7 +43,7 @@ class DroneSimulationNode(Node):
         self.control_subscriber_ = self.create_subscription(Control, "input", self.control_callback, qos_profile_sensor_data)
 
         # Publisher to output the simulator data
-        self.state_publisher_ = self.create_publisher(PoseStamped, "state", qos_profile_system_default)
+        self.state_publisher_ = self.create_publisher(Odometry, "state", qos_profile_system_default)
 
         # Create a timer that will perform the update step of the simulation
         self.timer_ = self.create_timer(1.0/frequency, self.update_simulation)
@@ -57,19 +57,24 @@ class DroneSimulationNode(Node):
     def update_simulation(self):
         
         # Update the current state of the system
-        x, y, theta = self.simulator.update(self.u1, self.u2)
+        x, y, theta, x_dot, y_dot, theta_dot = self.simulator.update(self.u1, self.u2)
 
         # Create a PoseStamped message
-        msg = PoseStamped()
+        msg = Odometry()
         msg.header.frame_id = "world"  # or map, or inertial frame (depending on your background)
         msg.header.stamp = self.get_clock().now().to_msg()
 
         # Set the position of the drone
-        msg.pose.position.x = x
-        msg.pose.position.y = y
+        msg.pose.pose.position.x = x
+        msg.pose.pose.position.y = y
 
         # Set the orientation of the drone
         msg.pose.orientation.z = theta
+
+        # Set the velocity of the drone
+        msg.twist.twist.linear.x = x_dot
+        msg.twist.twist.linear.y = y_dot
+        msg.twist.twist.angular.z = theta_dot
 
         # Publish the message
         self.state_publisher_.publish(msg)

@@ -50,4 +50,4 @@ class DroneSimulator:
             self.y = 0.0
             self.y_dot = 0.0
 
-        return self.x, self.y, self.theta
+        return self.x, self.y, self.theta, self.x_dot, self.y_dot, self.theta_dot
