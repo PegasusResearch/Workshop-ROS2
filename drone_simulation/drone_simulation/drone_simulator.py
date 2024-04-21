@@ -16,8 +16,8 @@ class DroneSimulator:
         self.g = 9.81
 
         # The initial state of the system
-        self.x = 0.0
-        self.y = 0.0
+        self.x = 450.0
+        self.y = 475.0
         self.theta = 0.0
 
         # The velocity of the system
@@ -32,8 +32,8 @@ class DroneSimulator:
         """
 
         # Compute the second derivative of the state
-        x_ddot = -u1 / self.m * sin(self.theta)
-        y_ddot = -self.g + (u1 / self.m * cos(self.theta))
+        x_ddot = u1 / self.m * sin(self.theta)
+        y_ddot = self.g - (u1 / self.m * cos(self.theta))
         theta_ddot = u2 / self.Ixx
 
         # Perform Euler Integration to get the current state
@@ -46,8 +46,8 @@ class DroneSimulator:
         self.theta += self.theta_dot * self.dt
 
         # Make sure the drone does not go below the ground
-        if self.y < 0.0:
-            self.y = 0.0
+        if self.y > 475.0:
+            self.y = 475.0
             self.y_dot = 0.0
 
         return self.x, self.y, self.theta, self.x_dot, self.y_dot, self.theta_dot

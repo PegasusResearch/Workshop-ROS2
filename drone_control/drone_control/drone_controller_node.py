@@ -77,19 +77,20 @@ class DroneControllerNode(Node):
     def waypoint_callback(self, msg: WaypointReference):
 
         # Update the waypoint to track
-        self.x_target = msg.x
-        self.y_target = msg.y
+        self.x_target = msg.reference[0]
+        self.y_target = msg.reference[1]
 
     def update_control(self):
         
         # Compute the control input to apply to the system
-        T, omega = self.controller.update(self.x, self.y, self.theta, self.x_dot, self.y_dot, self.theta_dot, self.x_target, self.y_target)
+        # T, omega = self.controller.update(self.x, self.y, self.theta, self.x_dot, self.y_dot, self.theta_dot, self.x_target, self.y_target)
 
-        # Publish the control input
-        control_msg = Control()
-        control_msg.thrust = T
-        control_msg.angular_velocity = omega
-        self.control_publisher_.publish(control_msg)
+        # # Publish the control input
+        # control_msg = Control()
+        # control_msg.thrust = T
+        # control_msg.angular_velocity = omega
+        # self.control_publisher_.publish(control_msg)
+        pass
 
 def main(args=None):
 
