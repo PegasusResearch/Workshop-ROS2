@@ -45,6 +45,9 @@ class DroneSimulator:
         self.y += self.y_dot * self.dt
         self.theta += self.theta_dot * self.dt
 
+        # Wrap the angle between -pi and pi
+        self.theta = (self.theta + 3.1415) % (2 * 3.1415) - 3.1415
+
         # Make sure the drone does not go below the ground
         if self.y > 475.0:
             self.y = 475.0

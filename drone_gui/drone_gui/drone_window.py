@@ -31,6 +31,7 @@ class GuiApp:
         self.angle = 0
         
         # Place image on canvas
+        self.text = self.canvas.create_text(self.x, self.y - 40, text="drone1", font=("Arial", 12), fill="black")
         self.image_item = self.canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
         # Bind mouse click event to canvas
@@ -45,13 +46,15 @@ class GuiApp:
         # Update position (simple example, you can modify this logic)
         self.x = x
         self.y = y
-        self.angle = angle * 180 / 3.14159  # Convert from radians to degrees
+        self.angle = -angle * 180 / 3.14159  # Convert from radians to degrees
         
         # Update image position and rotation
         self.canvas.delete(self.image_item)  # Remove previous image
+        self.canvas.delete(self.text)  # Remove previous text
         rotated_image = self.image.rotate(self.angle, expand=True)
         self.photo = ImageTk.PhotoImage(rotated_image)
         self.image_item = self.canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
+        self.text = self.canvas.create_text(self.x, self.y - 40, text="drone1", font=("Arial", 12), fill="black")
 
     def place_image_at_click(self, event):
 

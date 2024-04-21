@@ -5,7 +5,7 @@ class Controller:
 
     def __init__(self, position_kp, position_kd, attitude_kp, attitude_kd, mass):
 
-        self.g_force = np.array([0, -9.81])
+        self.g_force = np.array([0, 9.81])
         self.mass = mass
 
         # Initialize the horizontal gains
@@ -37,18 +37,30 @@ class Controller:
         y_error = y_target - y
 
         # Compute the outer loop control
-        u_x = -self.x_kp * x_error - self.x_kd * x_dot
-        u_y = -self.y_kp * y_error - self.y_kd * y_dot
+        u_x = -self.x_kp * x_error - self.x_kd * (0.0 - x_dot)
+        u_y = -self.y_kp * y_error - self.y_kd * (0.0 - y_dot)
         u = np.array([u_x, u_y])
 
-        # Compute the total thrust
-        T = self.mass * np.linalg.norm(u - self.g_force)
+        # Subtract the gravity force
+        u = u - self.g_force
+
+        # Make sure y-axis is positive
+        u[1] = max(0, u[1])
 
         # Compute the target angle
-        normalized_u = -(u - self.g_force) * self.mass / T
-        theta_target = np.arctan2(normalized_u[1], normalized_u[0])
+        u_star = u / np.linalg.norm(u)
+        theta_target = -np.arcsin(u_star[0])
+
+        # Compute the total thrust
+        T = self.mass * np.linalg.norm(u)
+
+        # Saturate the thrust to a 3-1 thrust to weight ratio
+        T = max(0, min(T, 5.88))
+
+        # Compute the smallest angle error
+        theta_error = theta_target - theta
 
         # Compute the inner loop control for the angular velocity
-        omega = -self.theta_kp * (theta_target - theta) - self.theta_kd * theta_dot
+        omega = self.theta_kp * theta_error - self.theta_kd * theta_dot
 
-        return T, omega
+        return float(T), omega

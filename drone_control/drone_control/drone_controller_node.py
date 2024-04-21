@@ -42,16 +42,16 @@ class DroneControllerNode(Node):
         self.controller = Controller(kp_pos, kd_pos, kp_theta, kd_theta, mass)
 
         # Get the current state of the system
-        self.x = 0.0
-        self.y = 0.0
-        self.theta = 0.0
-        self.x_dot = 0.0
-        self.y_dot = 0.0
-        self.theta_dot = 0.0
+        self.x = None
+        self.y = None
+        self.theta = None
+        self.x_dot = None
+        self.y_dot = None
+        self.theta_dot = None
 
         # Get the desired waypoint
-        self.x_target = 0.0
-        self.y_target = 0.0
+        self.x_target = None
+        self.y_target = None
 
         # Publisher to the control inputs of the system
         self.control_publisher_ = self.create_publisher(Control, "input", qos_profile_sensor_data)
@@ -82,15 +82,19 @@ class DroneControllerNode(Node):
 
     def update_control(self):
         
+        # Do not send control input if the state is not available or the reference to track is not received yet
+        if self.x is None or self.x_target is None:
+            return
+        
         # Compute the control input to apply to the system
-        # T, omega = self.controller.update(self.x, self.y, self.theta, self.x_dot, self.y_dot, self.theta_dot, self.x_target, self.y_target)
+        T, omega = self.controller.update(self.x, self.y, self.theta, self.x_dot, self.y_dot, self.theta_dot, self.x_target, self.y_target)
 
-        # # Publish the control input
-        # control_msg = Control()
-        # control_msg.thrust = T
-        # control_msg.angular_velocity = omega
-        # self.control_publisher_.publish(control_msg)
-        pass
+        # Publish the control input
+        control_msg = Control()
+        control_msg.thrust = T
+        control_msg.angular_velocity = omega
+        self.control_publisher_.publish(control_msg)
+
 
 def main(args=None):
 
