@@ -51,8 +51,8 @@ class DroneSimulationNode(Node):
     def control_callback(self, msg: Control):
 
         # Update the control input to apply to the system
-        self.u1 = msg.u1
-        self.u2 = msg.u2
+        self.u1 = msg.thrust
+        self.u2 = msg.angular_velocity
 
     def update_simulation(self):
         
@@ -69,7 +69,7 @@ class DroneSimulationNode(Node):
         msg.pose.pose.position.y = y
 
         # Set the orientation of the drone
-        msg.pose.orientation.z = theta
+        msg.pose.pose.orientation.z = theta
 
         # Set the velocity of the drone
         msg.twist.twist.linear.x = x_dot

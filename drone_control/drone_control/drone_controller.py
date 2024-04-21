@@ -42,10 +42,10 @@ class Controller:
         u = np.array([u_x, u_y])
 
         # Compute the total thrust
-        T = self.mass * np.norm(u - self.g_force)
+        T = self.mass * np.linalg.norm(u - self.g_force)
 
         # Compute the target angle
-        normalized_u = -(u - self.g_force) * self.m / T
+        normalized_u = -(u - self.g_force) * self.mass / T
         theta_target = np.arctan2(normalized_u[1], normalized_u[0])
 
         # Compute the inner loop control for the angular velocity

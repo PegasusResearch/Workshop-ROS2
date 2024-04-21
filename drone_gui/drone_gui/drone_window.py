@@ -21,6 +21,9 @@ class GuiApp:
         self.image = Image.open(os.path.join(self.assets_dir, "drone1.png"))
         self.image = self.image.resize((50, 50), Image.ANTIALIAS)
         self.photo = ImageTk.PhotoImage(self.image)
+
+        # Set an empty callback to set the waypoint reference
+        self.set_waypoint = None
         
         # Initial position and rotation angle
         self.x = 0
@@ -34,37 +37,25 @@ class GuiApp:
         self.canvas.bind("<Button-1>", self.place_image_at_click)
         
         # Start updating position and rotation
-        self.update_position_and_rotation()
+        self.update_position_and_rotation(450,475,0)
         
 
-    def update_position_and_rotation(self):
+    def update_position_and_rotation(self, x, y, angle):
+
         # Update position (simple example, you can modify this logic)
-        self.x += 1
-        if self.x > 400:
-            self.x = 0
-        
-        # Update rotation (simple example, you can modify this logic)
-        self.angle += 1
-        if self.angle >= 360:
-            self.angle = 0
+        self.x = x
+        self.y = y
+        self.angle = angle * 180 / 3.14159  # Convert from radians to degrees
         
         # Update image position and rotation
         self.canvas.delete(self.image_item)  # Remove previous image
         rotated_image = self.image.rotate(self.angle, expand=True)
         self.photo = ImageTk.PhotoImage(rotated_image)
         self.image_item = self.canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
-        
-        # Call this method again after 50 milliseconds (adjust as needed)
-        self.master.after(50, self.update_position_and_rotation)
 
     def place_image_at_click(self, event):
 
-        # Get coordinates of the click event
-        x = event.x
-        y = event.y
-        
-        # Update image position
-        self.canvas.delete(self.image_item)  # Remove previous image
-        self.x = x
-        self.y = y
-        self.image_item = self.canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
+        if self.set_waypoint is not None:
+
+            # Call the callback to set the waypoint
+            self.set_waypoint(event.x, event.y)

@@ -1,2 +1,2 @@
-float64 u1  # Thrust to apply
-float64 u2  # Angular velocity
+float64 thrust  # Thrust to apply
+float64 angular_velocity  # Angular velocity

@@ -23,14 +23,14 @@ class DroneControllerNode(Node):
             automatically_declare_parameters_from_overrides=True)
 
         # Get the mass, inertia and frequency from the configurations
-        mass = self.get_parameter('drone_simulation.mass').get_parameter_value().double_value
-        frequency = self.get_parameter('drone_simulation.frequency').get_parameter_value().double_value
+        mass = self.get_parameter('drone_controller.mass').get_parameter_value().double_value
+        frequency = self.get_parameter('drone_controller.frequency').get_parameter_value().double_value
 
         # Get the gains of the controller
-        kp_pos = self.get_parameter('drone_simulation.position.kp').get_parameter_value().double_value
-        kd_pos = self.get_parameter('drone_simulation.position.kd').get_parameter_value().double_value
-        kp_theta = self.get_parameter('drone_simulation.attitude.kp').get_parameter_value().double_value
-        kd_theta = self.get_parameter('drone_simulation.attitude.kd').get_parameter_value().double_value
+        kp_pos = self.get_parameter('drone_controller.position.kp').get_parameter_value().double_array_value
+        kd_pos = self.get_parameter('drone_controller.position.kd').get_parameter_value().double_array_value
+        kp_theta = self.get_parameter('drone_controller.attitude.kp').get_parameter_value().double_value
+        kd_theta = self.get_parameter('drone_controller.attitude.kd').get_parameter_value().double_value
 
         # Log the parameters
         self.get_logger().info("Drone mass: {}".format(mass))
