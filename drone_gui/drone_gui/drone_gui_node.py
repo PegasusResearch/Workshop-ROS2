@@ -31,6 +31,9 @@ class DroneGuiNode(Node):
         self.gui_app = gui_app
         self.gui_app.set_waypoint = self.set_waypoint
 
+        # Save the current states of the vehicles
+        self.vehicles_state = {}
+
         # Subscribe to the state of the vehicle
         self.state_subscriber_ = self.create_subscription(Odometry, "state", self.state_callback, qos_profile_system_default)
 
