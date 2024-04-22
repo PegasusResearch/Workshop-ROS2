@@ -1,5 +1,11 @@
 # Workshop-ROS2
 
+## Installing ROS 2
+
+Follow the steps on the links below (select the link which corresponds to your operating system):
+- [ROS 2 Humble - Ubuntu 22.04LTS](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
+- [ROS 2 Foxy - Ubuntu 20.04LTS](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
+
 ## Post Installation
 
 1) Open the .bashrc file. This file is read by the terminal every time it starts up, and tells your terminal where the programs and libraries are located.
@@ -32,3 +38,28 @@ export ROS_DOMAIN_ID=0
 export ROS_LOCALHOST_ONLY=0
 ```
 You can read more about this here [Domain-ID](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html).
+
+## Preparing a workspace to write code
+
+In order to create a workspace/directory where your code will be stored, follow the steps:
+
+1) Create the workspace
+```
+mkdir drone_ws
+```
+
+2) Create the src directory where the code will be placed
+```
+cd drone_ws
+mkdir src
+```
+3) Clone this repository inside the src directory
+```
+cd src
+git clone https://github.com/PegasusResearch/Workshop-ROS2.git
+```
+4) Compile/Index the code
+```
+cd ..
+colcon build --symlink-install
+```
