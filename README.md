@@ -1,7 +1,7 @@
 # Workshop-ROS2
 In this workshop, you'll gain a thorough understanding of ROS 2 as you develop a 2D controller from the ground up for a quadrotor, mastering fundamental concepts along the way.
 <p align = "center">
-<a target="_blank"><img src="readme_animation.gif" alt="Workshop Animation GIF" height="300"/></a
+<a target="_blank"><img src="docs/readme_animation.gif" alt="Workshop Animation GIF" height="300"/></a
 </p>
 
 Workshop Presentation: [Workshop ROS 2 slideshow.pdf](<./Workshop ROS 2 slideshow.pdf>)
@@ -84,7 +84,7 @@ ros2 launch drone_simulation simulation.launch.py
 - Institute for Systems and Robotics (ISR), a research unit of the Laboratory of Robotics and Engineering Systems (LARSyS).
 - Instituto Superior Técnico, Universidade de Lisboa
 
-The work developed by Marcelo Jacinto was supported by Ph.D. grants funded by Fundação para a Ciência e Tecnologia (FCT).
+The work developed by Marcelo Jacinto was supported by Ph.D. grant funded by Fundação para a Ciência e Tecnologia (FCT).
 
 <p float="left" align="center">
   <img src="docs/logo_isr.png" width="200" align="center"/> 
