@@ -1,5 +1,5 @@
 # Workshop-ROS2
-
+In this workshop, you'll gain a thorough understanding of ROS 2 as you develop a 2D controller from the ground up for a quadrotor, mastering fundamental concepts along the way.
 <p align = "center">
 <a target="_blank"><img src="readme_animation.gif" alt="Workshop Animation GIF" height="300"/></a
 </p>
