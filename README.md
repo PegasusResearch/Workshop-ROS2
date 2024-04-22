@@ -1,5 +1,9 @@
 # Workshop-ROS2
 
+<p align = "center">
+<a target="_blank"><img src="readme_animation.gif" alt="Workshop Animation GIF" height="300"/></a
+</p>
+
 ## Installing ROS 2
 
 Follow the steps on the links below (select the link which corresponds to your operating system):
