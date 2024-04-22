@@ -4,6 +4,8 @@ In this workshop, you'll gain a thorough understanding of ROS 2 as you develop a
 <a target="_blank"><img src="readme_animation.gif" alt="Workshop Animation GIF" height="300"/></a
 </p>
 
+Workshop Presentation: [Workshop ROS 2 slideshow.pdf](<./Workshop ROS 2 slideshow.pdf>)
+
 ## Installing ROS 2
 
 Follow the steps on the links below (select the link which corresponds to your operating system):
