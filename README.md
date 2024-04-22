@@ -31,3 +31,4 @@ alias s="source ${HOME}/.bashrc"
 export ROS_DOMAIN_ID=0
 export ROS_LOCALHOST_ONLY=0
 ```
+You can read more about this here [Domain-ID](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html).
