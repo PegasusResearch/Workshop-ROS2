@@ -19,7 +19,7 @@ Follow the steps on the links below (select the link which corresponds to your o
 gedit ~/.bashrc
 ```
 
-2) Tell the .bashrc file where ROS 2 is setup
+2) Tell the .bashrc file where ROS 2 is setup (replace humble by foxy if your are running Ubuntu 20.04LTS)
 ```
 source /opt/ros/humble/setup.bash
 source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
