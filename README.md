@@ -25,7 +25,7 @@ source /usr/share/colcon_cd/function/colcon_cd.sh
 export _colcon_cd_root=/opt/ros/humble
 ```
 
-3) To avoid Python warnings, also add the following line
+3) To avoid Python warnings, also add the following line to the .bashrc
 ```
 PYTHONWARNINGS="ignore:easy_install command is deprecated,ignore:setup.py install is deprecated"
 export PYTHONWARNINGS
@@ -66,4 +66,14 @@ git clone https://github.com/PegasusResearch/Workshop-ROS2.git
 ```
 cd ..
 colcon build --symlink-install
+```
+
+5) Add the following line to your .bashrc file
+```
+source ${HOME}/drone_ws/install/setup.bash
+```
+
+6) Close this terminal. Open a new one and test it!
+```
+ros2 launch drone_simulation simulation.launch.py
 ```
