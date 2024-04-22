@@ -79,3 +79,16 @@ source ${HOME}/drone_ws/install/setup.bash
 ```
 ros2 launch drone_simulation simulation.launch.py
 ```
+
+## Project Sponsors
+- Institute for Systems and Robotics (ISR), a research unit of the Laboratory of Robotics and Engineering Systems (LARSyS).
+- Instituto Superior Técnico, Universidade de Lisboa
+
+The work developed by Marcelo Jacinto was supported by Ph.D. grants funded by Fundação para a Ciência e Tecnologia (FCT).
+
+<p float="left" align="center">
+  <img src="docs/logo_isr.png" width="200" align="center"/> 
+  <img src="docs/larsys_logo.png" width="200" align="center"/> 
+  <img src="docs/ist_logo.png" width="200" align="center"/> 
+  <img src="docs/logo_fct.png" width="200" align="center"/> 
+</p>
