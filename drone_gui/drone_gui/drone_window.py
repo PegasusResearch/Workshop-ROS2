@@ -20,41 +20,31 @@ class GuiApp:
         # Load image
         self.image = Image.open(os.path.join(self.assets_dir, "drone1.png"))
         self.image = self.image.resize((50, 50), Image.ANTIALIAS)
-        self.photo = ImageTk.PhotoImage(self.image)
 
         # Set an empty callback to set the waypoint reference
         self.set_waypoint = None
         
         # Initial position and rotation angle
-        self.x = 0
-        self.y = 460
-        self.angle = 0
-        
-        # Place image on canvas
-        self.text = self.canvas.create_text(self.x, self.y - 40, text="drone1", font=("Arial", 12), fill="black")
-        self.image_item = self.canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
+        self.vehicle_states = {}
 
         # Bind mouse click event to canvas
         self.canvas.bind("<Button-1>", self.place_image_at_click)
         
-        # Start updating position and rotation
-        self.update_position_and_rotation(450,475,0)
-        
 
-    def update_position_and_rotation(self, x, y, angle):
+    def update_position_and_rotation(self, x, y, angle, vehicle_id):
 
-        # Update position (simple example, you can modify this logic)
-        self.x = x
-        self.y = y
-        self.angle = -angle * 180 / 3.14159  # Convert from radians to degrees
+        # Delete the previous image and text
+        if vehicle_id in self.vehicle_states:
+            self.canvas.delete(self.vehicle_states[vehicle_id]["image_item"])  # Remove previous image
+            self.canvas.delete(self.vehicle_states[vehicle_id]["text"])  # Remove previous text
+        else:
+            self.vehicle_states[vehicle_id] = {}
         
-        # Update image position and rotation
-        self.canvas.delete(self.image_item)  # Remove previous image
-        self.canvas.delete(self.text)  # Remove previous text
-        rotated_image = self.image.rotate(self.angle, expand=True)
-        self.photo = ImageTk.PhotoImage(rotated_image)
-        self.image_item = self.canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
-        self.text = self.canvas.create_text(self.x, self.y - 40, text="drone1", font=("Arial", 12), fill="black")
+        # Rotate the image and place it on the canvas
+        rotated_image = self.image.rotate(-angle * 180.0 / 3.14159, expand=True)
+        self.vehicle_states[vehicle_id]["image"] = ImageTk.PhotoImage(rotated_image)
+        self.vehicle_states[vehicle_id]["image_item"] = self.canvas.create_image(x, y, image=self.vehicle_states[vehicle_id]["image"], anchor=tk.CENTER)
+        self.vehicle_states[vehicle_id]["text"] = self.canvas.create_text(x, y - 40, text=vehicle_id, font=("Arial", 12), fill="black")
 
     def place_image_at_click(self, event):
 

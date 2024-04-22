@@ -31,14 +31,14 @@ class DroneGuiNode(Node):
         self.gui_app = gui_app
         self.gui_app.set_waypoint = self.set_waypoint
 
-        # Save the current states of the vehicles
+        # Dictionary to hold the subscribers to the state of the vehicles
         self.vehicles_state = {}
-
-        # Subscribe to the state of the vehicle
-        self.state_subscriber_ = self.create_subscription(Odometry, "state", self.state_callback, qos_profile_system_default)
 
         # Create a publisher to send the waypoint reference
         self.waypoint_publisher_ = self.create_publisher(WaypointReference, "waypoint", qos_profile_system_default)
+
+        # Create a periodic timer that will every 1 second get the topics available
+        self.get_topics_timer = self.create_timer(1, self.get_topics)
 
     def set_waypoint(self, x, y):
 
@@ -50,10 +50,34 @@ class DroneGuiNode(Node):
         msg.reference = [float(x), float(y)]
         self.waypoint_publisher_.publish(msg)
 
-    def state_callback(self, msg: Odometry):
+    def state_callback(self, msg: Odometry, vehicle_id: str):
 
         # Call the update method of the GUI to update the state of the vehicle
-        self.gui_app.update_position_and_rotation(msg.pose.pose.position.x, msg.pose.pose.position.y, msg.pose.pose.orientation.z)
+        self.gui_app.update_position_and_rotation(msg.pose.pose.position.x, msg.pose.pose.position.y, msg.pose.pose.orientation.z, vehicle_id)
+
+    def get_topics(self):
+
+        # Get the list of topics available
+        topics = self.get_topic_names_and_types()
+
+        # Iterate over the list of topics
+        for topic in topics:
+
+            # Check if the topic string contains the word "state"
+            if "state" in topic[0]:
+
+                # Get the ID of the vehicle
+                vehicle_id = topic[0].split("/")[1]
+                
+                # Check if the vehicle ID is not in the dictionary of states
+                if vehicle_id not in self.vehicles_state:
+
+                    self.get_logger().info(f"Found topic {topic[0]}")
+                    self.get_logger().info(f"Vehicle ID: {vehicle_id}")
+
+                    # Add the vehicle ID to the dictionary of state subscribers
+                    self.vehicles_state[vehicle_id] = self.create_subscription(Odometry, topic[0], lambda msg, id=vehicle_id: self.state_callback(msg, id), qos_profile_sensor_data)
+                    
 
 
 def main(args=None):
