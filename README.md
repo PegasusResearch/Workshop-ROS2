@@ -14,6 +14,7 @@ Follow the steps on the links below (select the link which corresponds to your o
 
 Also install the colcon build tools:
 ```
+sudo apt install ros-dev-tools
 sudo apt install python3-colcon-common-extensions
 ```
 
