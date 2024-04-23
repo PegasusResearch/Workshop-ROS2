@@ -12,6 +12,11 @@ Follow the steps on the links below (select the link which corresponds to your o
 - [ROS 2 Humble - Ubuntu 22.04LTS](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 - [ROS 2 Foxy - Ubuntu 20.04LTS](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
 
+Also install the colcon build tools:
+```
+sudo apt install python3-colcon-common-extensions
+```
+
 ## Post Installation
 
 1) Open the .bashrc file. This file is read by the terminal every time it starts up, and tells your terminal where the programs and libraries are located.
