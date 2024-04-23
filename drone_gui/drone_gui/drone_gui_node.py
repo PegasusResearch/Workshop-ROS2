@@ -53,7 +53,7 @@ class DroneGuiNode(Node):
     def state_callback(self, msg: Odometry, vehicle_id: str):
 
         # Call the update method of the GUI to update the state of the vehicle
-        self.gui_app.update_position_and_rotation(msg.pose.pose.position.x, msg.pose.pose.position.y, msg.pose.pose.orientation.z, vehicle_id)
+        self.gui_app.update_position_and_rotation(msg.pose.pose.position.x, msg.pose.pose.position.y, msg.pose.pose.orientation.z, vehicle_id, msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9)
 
     def get_topics(self):
 

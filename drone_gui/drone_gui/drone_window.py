@@ -29,22 +29,35 @@ class GuiApp:
 
         # Bind mouse click event to canvas
         self.canvas.bind("<Button-1>", self.place_image_at_click)
+
+        self.last_time = 0
         
 
-    def update_position_and_rotation(self, x, y, angle, vehicle_id):
+    def update_position_and_rotation(self, x, y, angle, vehicle_id, curr_time):
+
+        if curr_time - self.last_time < 0.015:
+            return
+        
+        self.last_time = curr_time
 
         # Delete the previous image and text
-        if vehicle_id in self.vehicle_states:
-            self.canvas.delete(self.vehicle_states[vehicle_id]["image_item"])  # Remove previous image
-            self.canvas.delete(self.vehicle_states[vehicle_id]["text"])  # Remove previous text
-        else:
+        if vehicle_id not in self.vehicle_states:
             self.vehicle_states[vehicle_id] = {}
         
         # Rotate the image and place it on the canvas
         rotated_image = self.image.rotate(-angle * 180.0 / 3.14159, expand=True)
         self.vehicle_states[vehicle_id]["image"] = ImageTk.PhotoImage(rotated_image)
-        self.vehicle_states[vehicle_id]["image_item"] = self.canvas.create_image(x, y, image=self.vehicle_states[vehicle_id]["image"], anchor=tk.CENTER)
-        self.vehicle_states[vehicle_id]["text"] = self.canvas.create_text(x, y - 40, text=vehicle_id, font=("Arial", 12), fill="black")
+        new_image = self.canvas.create_image(x, y, image=self.vehicle_states[vehicle_id]["image"], anchor=tk.CENTER)
+        new_text = self.canvas.create_text(x, y - 40, text=vehicle_id, font=("Arial", 12), fill="black")
+
+        if vehicle_id in self.vehicle_states and "text" in self.vehicle_states[vehicle_id] and "image" in self.vehicle_states[vehicle_id]:
+            
+            # Delete the previous text and image
+            self.canvas.delete(self.vehicle_states[vehicle_id]["text"])
+            self.canvas.delete(self.vehicle_states[vehicle_id]["image_item"])
+
+        self.vehicle_states[vehicle_id]["text"] = new_text
+        self.vehicle_states[vehicle_id]["image_item"] = new_image
 
     def place_image_at_click(self, event):
 
