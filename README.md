@@ -83,7 +83,7 @@ source ${HOME}/drone_ws/install/setup.bash
 
 6) Close this terminal. Open a new one and test it!
 ```
-ros2 launch drone_simulation simulation.launch.py
+ros2 launch drone_launch simulation.launch.py
 ```
 
 ## Project Sponsors
