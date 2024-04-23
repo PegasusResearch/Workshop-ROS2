@@ -38,8 +38,13 @@ class Controller:
 
         # Compute the outer loop control
         u_x = -self.x_kp * x_error - self.x_kd * (0.0 - x_dot)
+        u_x = np.clip(u_x, -20, 20)
         u_y = -self.y_kp * y_error - self.y_kd * (0.0 - y_dot)
+        u_y = np.clip(u_y, -30, 30)
         u = np.array([u_x, u_y])
+
+        # Saturate the acceleration
+        u = np.clip(u, -30, 30)
 
         # Subtract the gravity force
         u = u - self.g_force
